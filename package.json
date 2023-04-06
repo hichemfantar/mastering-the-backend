@@ -5,8 +5,8 @@
 	"main": "server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node server.js",
-		"hich": "echo hich is cool"
+		"start": "echo hello there && node server.js",
+		"hich": "dir"
 	},
 	"author": "hichem",
 	"license": "ISC",
