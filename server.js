@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+let interns = ["Eya", "Khalil", "Abderrazek", "wijdene"];
+
 app.get("/", function (req, res) {
 	res.send("Hello " + req.query.name);
 });
@@ -13,12 +15,22 @@ app.get("/cs", function (req, res) {
 	res.send("Hello CS members");
 });
 
-app.get("/stagiaires", function (req, res) {
-	res.send([
-		{ name: "Eya", age: 20 },
-		{ name: "Khalil", age: 20 },
-		{ name: "Abderrazek", age: 20 },
-	]);
+app.get("/interns", function (req, res) {
+	res.send(interns);
+});
+
+app.get("/interns/add", function (req, res) {
+	interns.push(req.query.name);
+
+	res.send("Added succesfully");
+});
+
+app.get("/interns/delete", function (req, res) {
+	interns = interns.filter((intern) => {
+		return intern !== req.query.name;
+	});
+
+	res.send("Deleted succesfully");
 });
 
 app.listen(3000);
