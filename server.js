@@ -1,36 +1,66 @@
 const express = require("express");
 const app = express();
 
-let interns = ["Eya", "Khalil", "Abderrazek", "wijdene"];
+let wieMembersArray = [
+	{ id: 1, name: "Manar" },
+	{ id: 2, name: "Wijdene" },
+	{ id: 3, name: "Nour" },
+	{ id: 4, name: "Wijdene" },
+];
+
+let wieMembersAchievements = [];
 
 app.get("/", function (req, res) {
 	res.send("Hello " + req.query.name);
 });
 
-app.get("/wie", function (req, res) {
+app.get("/hello-wie", function (req, res) {
 	res.send("Hello WIE");
 });
 
-app.get("/cs", function (req, res) {
+app.get("/hello-cs", function (req, res) {
 	res.send("Hello CS members");
 });
 
-app.get("/interns", function (req, res) {
-	res.send(interns);
+app.get("/wie", function (req, res) {
+	res.send(wieMembersArray);
 });
 
-app.get("/interns/add", function (req, res) {
-	interns.push(req.query.name);
+app.get("/wie/getById", function (req, res) {
+	res.send(
+		wieMembersArray.find((wieMember) => wieMember.id === parseInt(req.query.id))
+	);
+});
+
+app.get("/wie/add", function (req, res) {
+	wieMembersArray.push({
+		id: wieMembersArray.length + 1,
+		name: req.query.name,
+	});
 
 	res.send("Added succesfully");
 });
 
-app.get("/interns/delete", function (req, res) {
-	interns = interns.filter((intern) => {
-		return intern !== req.query.name;
+app.get("/wie/delete", function (req, res) {
+	wieMembersArray = wieMembersArray.filter((wieMember) => {
+		return wieMember.id != parseInt(req.query.id);
 	});
 
 	res.send("Deleted succesfully");
+});
+
+app.get("/wie/update", function (req, res) {
+	console.log(req.query.id);
+	wieMembersArray = wieMembersArray.map((wieMember) => {
+		if (wieMember.id === parseInt(req.query.id)) {
+			return {
+				id: wieMember.id,
+				name: req.query.name,
+			};
+		} else return wieMember;
+	});
+
+	res.send("Member of ID " + req.query.id + " has been updated succesfully");
 });
 
 app.listen(3000);
